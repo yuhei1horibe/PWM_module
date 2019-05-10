@@ -18,12 +18,11 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-`include "transaction.sv"
-`include "generator.sv"
-`include "driver.sv"
-
 `ifndef ENV_GUARD
 `define ENV_GUARD
+
+`include "generator.sv"
+`include "driver.sv"
 
 // Environment has generator, transaction
 // and mailbox and connects those 2 blocks
@@ -51,7 +50,6 @@ class environment;
 
         // Instantiating generator and driver
         gen = new(gen2drv, gen_ended);
-        //gen = new(gen2drv);
         drv = new(pwm_vif, gen2drv);
     endfunction
 
@@ -67,7 +65,7 @@ class environment;
     endtask
 
     task post_test();
-        //wait(gen_ended.triggered);
+        wait(gen_ended.triggered);
         wait(gen.repeat_count == drv.num_transactions);
     endtask
 

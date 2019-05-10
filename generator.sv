@@ -21,11 +21,13 @@
 `ifndef GEN_GUARD
 `define GEN_GUARD
 
+`include "transaction.sv"
+
 // Generator will generate transactions,
 // and pass it to driver
 class Generator;
     // Transaction class
-    rand pwm_transaction trans;
+    pwm_transaction trans;
 
     // mailbox
     mailbox gen2drv;
@@ -53,7 +55,7 @@ class Generator;
             end
             gen2drv.put(trans);
         end
-        //-> ended;
+        ->ended;
     endtask
 endclass
 `endif

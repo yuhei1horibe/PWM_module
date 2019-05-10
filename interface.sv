@@ -26,7 +26,7 @@ interface pwm_intf(input logic clk, reset);
     logic [7:0] pwm_value;
     logic [7:0] pwm_range;
     logic       pwm_en;
-;
+
     logic       pwm_period;
     logic       pwm_out;
     

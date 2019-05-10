@@ -18,6 +18,9 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
+`ifndef TOP_GUARD
+`define TOP_GUARD
+
 `include "interface.sv"
 `include "random_test.sv"
 
@@ -38,7 +41,7 @@ module tbench_top;
     end
 
     // Interface
-    pwm_intf intf(clk, reset);
+    pwm_intf intf(.pwm_clk(clk), .pwm_reset(reset));
 
     // Testcase instance
     test t1(intf);
@@ -61,4 +64,5 @@ module tbench_top;
         $dumpvars;
     end
 endmodule
+`endif
 

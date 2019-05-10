@@ -18,10 +18,10 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-`include "environment.sv"
-
 `ifndef RAND_TEST_GUARD
 `define RAND_TEST_GUARD
+
+`include "environment.sv"
 
 program test(pwm_intf intf);
     // Environment

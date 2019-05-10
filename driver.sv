@@ -18,10 +18,13 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-`include "interface.sv"
-
 `ifndef DRV_GUARD
 `define DRV_GUARD
+
+`include "interface.sv"
+`include "transaction.sv"
+
+`define DRIV_IF pwm_vif.DRIVER.driver_cb
 
 class Driver;
     // Count the transactions
@@ -41,12 +44,12 @@ class Driver;
 
     // Reset task
     task reset();
-        wait(!pwm_vif.reset);
+        wait(!pwm_vif.DRIVER.reset);
         $display("----[DRIVER] Reset----");
-        pwm_vif.pwm_value  <= 8'h00;
-        pwm_vif.pwm_range  <= 8'hFF;
-        pwm_vif.pwm_en     <= 0;
-        wait(pwm_vif.reset);
+        `DRIV_IF.pwm_value  <= 8'h00;
+        `DRIV_IF.pwm_range  <= 8'hFF;
+        `DRIV_IF.pwm_en     <= 0;
+        wait(pwm_vif.DRIVER.reset);
         $display("----[DRIVER] Unreset----");
     endtask
 
@@ -54,13 +57,13 @@ class Driver;
     task drive();
         forever begin
             pwm_transaction trans;
-            pwm_vif.pwm_en <= 1'b1;
+            `DRIV_IF.pwm_en <= 1'b1;
             gen2drv.get(trans);
             $display("----[DRIVER-TRANSER: %0d]----", num_transactions);
             @(posedge pwm_vif.DRIVER.clk);
-            //@(posedge pwm_vif.clk);
-            pwm_vif.pwm_value <= trans.pwm_value;
-            pwm_vif.pwm_range <= trans.pwm_range;
+            //@(posedge `DRIV_IF.clk);
+            `DRIV_IF.pwm_value <= trans.pwm_value;
+            `DRIV_IF.pwm_range <= trans.pwm_range;
             $display("\tRange: %0d, Value: %0d", trans.pwm_range, trans.pwm_value);
             $display("-----------------------------");
             num_transactions++;
