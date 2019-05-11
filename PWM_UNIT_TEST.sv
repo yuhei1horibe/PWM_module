@@ -47,7 +47,7 @@ module tbench_top;
     test t1(intf);
 
     // DUT instantiation
-    PWM_UNIT DUT(
+    PWM_UNIT PWM_DUT(
         .pwm_value  (intf.pwm_value  ),
         .pwm_range  (intf.pwm_range  ),
         .pwm_clk    (intf.clk    ),

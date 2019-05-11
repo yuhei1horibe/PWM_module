@@ -61,9 +61,11 @@ class Driver;
             gen2drv.get(trans);
             $display("----[DRIVER-TRANSER: %0d]----", num_transactions);
             @(posedge pwm_vif.DRIVER.clk);
+            begin
             //@(posedge `DRIV_IF.clk);
-            `DRIV_IF.pwm_value <= trans.pwm_value;
-            `DRIV_IF.pwm_range <= trans.pwm_range;
+                `DRIV_IF.pwm_value <= trans.pwm_value;
+                `DRIV_IF.pwm_range <= trans.pwm_range;
+            end
             $display("\tRange: %0d, Value: %0d", trans.pwm_range, trans.pwm_value);
             $display("-----------------------------");
             num_transactions++;
